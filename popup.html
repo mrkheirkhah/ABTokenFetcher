@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Token Fetcher :-))</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="fingerprint.min.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <form id="fetchTokenForm">
+      <h1>Token Fetcher :-))</h1>
+      <input type="text" placeholder="username" id="username" />
+      <input type="password" placeholder="password" id="password" />
+      <div>
+        <label for="remember"> remember me </label>
+        <input type="checkbox" id="rememberMe" />
+      </div>
+      <button type="submit">Fetch Token</button>
+    </form>
+    <p id="successMessage"></p>
+    <p id="failedMessage"></p>
+  </body>
+</html>

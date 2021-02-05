@@ -1,0 +1,70 @@
+body {
+  min-width: 300px;
+  min-height: 300px;
+  padding: 8px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1.5px solid #f1f1f8;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+input:active,
+input:focus {
+  box-shadow: 0px 0px 5px #00b6cd;
+  border: none;
+  outline: none;
+}
+
+button {
+  background-color: #00b6cd;
+  color: #fff;
+  border: none;
+  padding: 16px;
+  border-radius: 4px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  margin: 10px auto;
+}
+
+h1 {
+  color: #707070;
+}
+
+form label {
+  width: 150px;
+}
+
+form div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+#successMessage {
+  color: rgb(179, 241, 86);
+}
+
+#failedMessage {
+  color: rgb(238, 58, 58);
+}
