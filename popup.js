@@ -18,8 +18,12 @@ const fetchToken = (e) => {
   e.stopPropagation();
   e.preventDefault();
   try {
-    var req = new XMLHttpRequest();
-    var url = "https://asanbourse.ir/Token";
+    const req = new XMLHttpRequest();
+    let url;
+    const mode = document.getElementById("tokenMode").value;
+    if (mode === "local") url = "https://localhost:44305/Token";
+    else url = "https://asanbourse.ir/Token";
+    debugger;
     req.open("POST", url, true);
 
     const userLoginInfo =
