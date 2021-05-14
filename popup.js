@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("username") && localStorage.getItem("password")) {
-    document.getElementById("username").value = localStorage.getItem(
-      "username"
-    );
-    document.getElementById("password").value = localStorage.getItem(
-      "password"
-    );
+    document.getElementById("username").value =
+      localStorage.getItem("username");
+    document.getElementById("password").value =
+      localStorage.getItem("password");
     document.getElementById("rememberMe").checked = true;
   }
   var fetchTokenButton = document.getElementById("fetchTokenForm");
@@ -18,13 +16,26 @@ const fetchToken = (e) => {
   e.stopPropagation();
   e.preventDefault();
   try {
-    const req = new XMLHttpRequest();
     let url;
     const mode = document.getElementById("tokenMode").value;
-    if (mode === "local") url = "https://localhost:44305/Token";
-    else url = "https://asanbourse.ir/Token";
-    debugger;
-    req.open("POST", url, true);
+
+    switch (mode) {
+      case "site-AB":
+        url = "https://asanbourse.ir/Token";
+        break;
+      case "site-AC":
+        url = "https://asancrypto.com/Token";
+        break;
+      case "local-AB":
+        url = "https://localhost:44305/Token";
+        break;
+      case "local-AC":
+        url = "https://localhost:44307/Token";
+        break;
+      default:
+        url = "https://asanbourse.ir/Token";
+        break;
+    }
 
     const userLoginInfo =
       "grant_type=password&" +
@@ -54,32 +65,33 @@ const fetchToken = (e) => {
       screen_resolution: true,
     }).get();
 
-    req.setRequestHeader(
-      "Content-type",
-      "application/x-www-form-urlencoded; charset=UTF-8"
-    );
+    const headers = {
+      FingerPrint: fingerprint,
+      "Access-Control-Allow-Origin": "*",
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    };
 
-    req.setRequestHeader("Access-Control-Allow-Origin", "*");
-
-    req.setRequestHeader("FingerPrint", fingerprint);
-    req.onreadystatechange = function () {
-      if (req.readyState == 4 && req.status == 200) {
+    $.ajax({
+      type: "POST",
+      url,
+      data: userLoginInfo,
+      headers: headers,
+    })
+      .done(function (data) {
         document.getElementById("successMessage").innerHTML =
-          req.status + "token fetched and placed in local storage";
+          "DONE token fetched and placed in local storage";
         chrome.tabs.query({ active: true }, function (tabs) {
           chrome.tabs.executeScript(tabs[0].id, {
-            code: `localStorage.setItem("accessToken", "${
-              JSON.parse(req.responseText).access_token
-            }")`,
+            code: `localStorage.setItem("accessToken", "${data.access_token}")`,
           });
         });
-      } else if (req.status !== 200) {
-        document.getElementById("failedMessage").innerHTML =
-          "some error accrued" + req.status + req.statusText;
-      }
-    };
-    req.send(userLoginInfo);
-  } catch (e) {
-    document.getElementById("failedMessage").innerHTML = JSON.stringify(e);
-  }
+      })
+      .fail(function (ex) {
+        $("#failedMessage").text(
+          `Error Fetching Token: ${JSON.stringify(ex.statusCode())} ${
+            ex.statusText
+          }`
+        );
+      });
+  } catch (ex) {}
 };

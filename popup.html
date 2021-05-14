@@ -3,14 +3,17 @@
   <head>
     <title>Token Fetcher :-))</title>
     <link rel="stylesheet" href="/styles.css" />
+    <script src="jQuery.js"></script>
     <script src="fingerprint.min.js"></script>
     <script src="popup.js"></script>
   </head>
   <body>
     <form id="fetchTokenForm">
       <select id="tokenMode" name="tokenMode">
-        <option value="local">Local dev token</option>
-        <option value="site">site token</option>
+        <option value="site-AB">site token (Asanbourse.ir)</option>
+        <option value="site-AC">site token (AsanCrypto.com)</option>
+        <option value="local-AB">Local dev token (Asanbourse.ir)</option>
+        <option value="local-AC">Local dev token (AsanCrypto.com)</option>
       </select>
       <input type="text" placeholder="username" id="username" />
       <input type="password" placeholder="password" id="password" />
