@@ -81,9 +81,11 @@ const fetchToken = (e) => {
         document.getElementById("successMessage").innerHTML =
           "DONE token fetched and placed in local storage";
         chrome.tabs.query({ active: true }, function (tabs) {
-          chrome.tabs.executeScript(tabs[0].id, {
-            code: `localStorage.setItem("accessToken", "${data.access_token}")`,
-          });
+          for (const tabInd in tabs) {
+            chrome.tabs.executeScript(tabs[tabInd].id, {
+              code: `localStorage.setItem("accessToken", "${data.access_token}")`,
+            });
+          }
         });
       })
       .fail(function (ex) {
